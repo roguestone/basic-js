@@ -16,26 +16,22 @@ const { NotImplementedError } = require("../lib");
  *
  */
 function renameFiles(names) {
+ if (names.length === 0) return [];
+
  const result = [];
- const nameCount = {};
+ const usedNames = new Set();
 
- for (const originalName of names) {
-  let currentName = originalName;
+ for (const name of names) {
+  let newName = name;
+  let counter = 1;
 
-  while (nameCount[currentName]) {
-   const count = nameCount[currentName];
-   currentName = `${originalName}(${count})`;
-   nameCount[originalName] = count + 1;
+  while (usedNames.has(newName)) {
+   newName = `${name}(${counter})`;
+   counter++;
   }
 
-  result.push(currentName);
-  nameCount[currentName] = 1;
-
-  if (currentName !== originalName) {
-   nameCount[originalName] = (nameCount[originalName] || 1) + 1;
-  } else {
-   nameCount[originalName] = (nameCount[originalName] || 0) + 1;
-  }
+  result.push(newName);
+  usedNames.add(newName);
  }
 
  return result;

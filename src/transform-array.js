@@ -14,6 +14,10 @@ const { NotImplementedError } = require("../lib");
  *
  */
 function transform(arr) {
+ if (!Array.isArray(arr)) {
+  throw new Error("'arr' parameter must be an instance of the Array!");
+ }
+
  const result = [];
  const discardNextIndexes = new Set();
 
